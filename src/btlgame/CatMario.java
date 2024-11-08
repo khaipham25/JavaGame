@@ -9,18 +9,19 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 public class CatMario extends JPanel implements ActionListener,KeyListener{
-    int GameWidth = 600;
+    int GameWidth = 600;//khung game
     int GameHeight = 750;
     
     private boolean GameStarted= false;
     Random random = new Random();
-    Image bgImg,BatDauImg; Image nhanvatImg; Image ongImg; Image gaiImg; Image gachImg, sanImg;
+    Image bgImg,BatDauImg; Image nhanvatImg; Image ongImg; Image gaiImg; Image gachImg, sanImg, hoichamImg, quaiImg;
     Image namImg;
-    Timer gameLoop;
+    Image restartImg,continueImg,loseImg,highScoreImg,diemImg,winImg;
+    Timer gameLoop, placeGame;
     class NhanVat {
-        int x = 45;
+        int x = 45; // vi tri
         int y = 511;
-        int width = 30;
+        int width = 30; // kich thuoc nhan vat
         int height = 40;
         Image img;
 
@@ -30,7 +31,7 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
     }
     NhanVat nhanvat;
     class Ong {
-        int x = random.nextInt(GameWidth)+20;
+        int x = random.nextInt(GameWidth)+50;
         int y = random.nextInt(GameHeight);
         int width = 25;
         int height = 35;
@@ -43,7 +44,7 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
     }
     Ong ong;
     class Nam {
-        int x = random.nextInt(GameWidth)+20;
+        int x = random.nextInt(GameWidth)+50;
         int y = random.nextInt(GameHeight);
         int width = 25;
         int height = 35;
@@ -56,7 +57,7 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
     }
     Nam nam;
     class Gach {
-        int x = random.nextInt(GameWidth)+20;//tuy bien
+        int x = random.nextInt(GameWidth)+50;//tuy bien
         int y = random.nextInt(GameHeight);
         int width = 25;
         int height = 30;
@@ -69,7 +70,7 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
     }
     Gach gach;
     class Gai {
-        int x = random.nextInt(GameWidth)+20;
+        int x = random.nextInt(GameWidth)+50;
         int y = random.nextInt(GameHeight);
         int width = 25;
         int height = 30;
@@ -81,7 +82,29 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
         }
     }
     Gai gai;
-
+    class HoiCham{
+        int x = random.nextInt(GameWidth)+50;
+        int y = random.nextInt(GameHeight);
+        int width= 25;
+        int height=30;
+        Image img;
+        HoiCham(Image img){
+            this.img= img;
+        }
+    }
+    HoiCham hoicham;
+    
+    class Quai{
+        int x= random.nextInt(GameWidth)+50;
+        int y= random.nextInt(GameHeight);
+        int width=25;
+        int height=30;
+        Image img;
+        Quai(Image img){
+            this.img=img;
+        }
+    }
+    Quai quai;
     CatMario() {
         setPreferredSize(new Dimension(GameWidth, GameHeight));
         // setBackground(Color.blue);
@@ -97,6 +120,14 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
         gachImg = new ImageIcon(getClass().getResource("/btlgame/IMG/gach.png")).getImage();
         namImg = new ImageIcon(getClass().getResource("/btlgame/IMG/nam.png")).getImage();
         sanImg = new ImageIcon(getClass().getResource("/btlgame/IMG/san.png")).getImage();
+        hoichamImg = new ImageIcon(getClass().getResource("/btlgame/IMG/hoicham.png")).getImage();
+        quaiImg = new ImageIcon(getClass().getResource("/btlgame/IMG/quai.png")).getImage();
+        restartImg = new ImageIcon(getClass().getResource("/btlgame/IMG/restart.png")).getImage();
+        continueImg = new ImageIcon(getClass().getResource("/btlgame/IMG/continue.png")).getImage();
+        loseImg = new ImageIcon(getClass().getResource("/btlgame/IMG/lose.png")).getImage();
+        winImg = new ImageIcon(getClass().getResource("/btlgame/IMG/win.png")).getImage();
+        diemImg = new ImageIcon(getClass().getResource("/btlgame/IMG/diem.png")).getImage();
+        highScoreImg = new ImageIcon(getClass().getResource("/btlgame/IMG/highScore.png")).getImage();
 
         nhanvat = new NhanVat(nhanvatImg);
         gameLoop = new Timer(1000 / 60, this); // Cập nhật 60 lần mỗi giây
@@ -116,18 +147,11 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
     }
     public void draw(Graphics g) {
         //background
-       // g.drawImage(BatDauImg, 0, 0, this.GameWidth, this.GameHeight, null);
         g.drawImage(bgImg, 0, 0, this.GameWidth, this.GameHeight, null);
         g.drawImage(nhanvatImg, nhanvat.x, nhanvat.y, nhanvat.width, nhanvat.height, null);
         g.drawImage(sanImg, 0, 550,Integer.MAX_VALUE, 200, null);
 
-        //pipes
-//        for (int i = 0; i < pipes.size(); i++) {
-//            Pipe pipe = pipes.get(i);
-//            g.drawImage(pipe.img, Ong.x, pipe.y, pipe.width, pipe.height, null);
-//        }
 
-        //score
         g.setColor(Color.white);
 
 //        g.setFont(new Font("Arial", Font.PLAIN, 32));
@@ -142,7 +166,7 @@ public class CatMario extends JPanel implements ActionListener,KeyListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {  
-        //repaint();
+        repaint();
     }
 
     @Override
